@@ -11,6 +11,8 @@ import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
+import SwiperCore, { Autoplay } from "swiper";
+
 const ReviewCard = () => {
   const [reviews, setReviews] = useState([]);
 
@@ -23,6 +25,10 @@ const ReviewCard = () => {
   const isSm = useMediaQuery("(min-width:0px) and (max-width:899px)");
   const isMd = useMediaQuery("(min-width:900px) and (max-width:1199px)");
   const isLg = useMediaQuery("(min-width:1200px)");
+
+  SwiperCore.use([Autoplay]);
+
+  console.log(reviews);
 
   return (
     <Container sx={{ my: 10 }}>
@@ -38,14 +44,19 @@ const ReviewCard = () => {
             onSlideChange={() => {}}
             onSwiper={(swiper) => {}}
             className="swiper-container"
+            style={{ height: "200px" }}
+            loop={true}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
           >
             {reviews.map((review) => (
               <SwiperSlide key={review._id}>
-                <Card sx={{ minWidth: 275, textAlign: "start" }}>
+                <Card sx={{ minWidth: 275, textAlign: "start", boxShadow: 2 }}>
                   <CardContent>
                     <Typography variant="h5">{review?.name}</Typography>
                     <Typography variant="body1">{review?.review}</Typography>
-                    <Typography variant="body1">{review?.name}</Typography>
                     <Box>
                       <Rating
                         name="read-only"
