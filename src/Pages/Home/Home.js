@@ -8,18 +8,22 @@ import ReviewCard from "../../Components/ReviewsCard/ReviewCard";
 
 const Home = () => {
   const [cars, setCars] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
   useEffect(() => {
     fetch("https://car-house-server-side.herokuapp.com/cars")
       .then((res) => res.json())
-      .then((data) => setCars(data));
+      .then((data) => {
+        setLoading(false);
+        setCars(data);
+      });
   }, []);
 
   return (
     <div>
       <Header></Header>
       <Banner></Banner>
-      <Cars cars={cars} slice></Cars>
+      <Cars cars={cars} slice loading={loading}></Cars>
       <ReviewCard></ReviewCard>
       <AboutUs></AboutUs>
       <Footer></Footer>
